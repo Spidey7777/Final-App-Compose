@@ -1,6 +1,7 @@
 package com.example.randomuser
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -13,6 +14,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -29,10 +31,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        viewModel = ViewModelProvider(this, EmployeeViewModel.Factory(application)).get(EmployeeViewModel::class.java)
         setContent {
             RandomUserTheme {
-
+                viewModel.empList.value?.let { Employees(databaseEmployees = it) }
+                Log.d("Compose", "onCreate: ${viewModel.empList}")
             }
         }
     }
@@ -108,7 +111,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun PreviewEmployees() {
         RandomUserTheme {
-            Employees(databaseEmployees = viewModel.empList)
+            viewModel = ViewModelProvider(this, EmployeeViewModel.Factory(application!!)).get(EmployeeViewModel::class.java)
+            viewModel.empList.value?.let { Employees(databaseEmployees = it) }
         }
     }
 }
