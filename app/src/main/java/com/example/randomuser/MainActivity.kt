@@ -14,6 +14,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,8 +36,10 @@ class MainActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this, EmployeeViewModel.Factory(application)).get(EmployeeViewModel::class.java)
         setContent {
             RandomUserTheme {
-                viewModel.empList.value?.let { Employees(databaseEmployees = it) }
-                Log.d("Compose", "onCreate: ${viewModel.empList}")
+//                viewModel.empList.value?.let { Employees(databaseEmployees = it) }
+                val items by viewModel.empList.observeAsState()
+                items?.let { Employees(databaseEmployees = it) }
+
             }
         }
     }

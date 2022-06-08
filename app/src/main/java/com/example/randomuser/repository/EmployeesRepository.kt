@@ -1,16 +1,25 @@
 package com.example.randomuser.repository
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.randomuser.database.DatabaseEmployee
 import com.example.randomuser.database.EmployeesDatabase
+import com.example.randomuser.database.getDatabase
 import com.example.randomuser.network.EmployeeApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
-class EmployeesRepository(private val database: EmployeesDatabase) {
+class EmployeesRepository {
+    lateinit var empList: LiveData<List<DatabaseEmployee>>
+    lateinit var  database : EmployeesDatabase
 
-    val empList: LiveData<List<DatabaseEmployee>> =database.employeeDao.getEmployees()
+    constructor(application: Application){
+        database = getDatabase(application)
+        empList = database.employeeDao.getEmployees()
+
+    }
+
 
     suspend fun refreshList() {
         withContext(Dispatchers.IO) {
