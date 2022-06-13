@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .size(120.dp)
                             .clip(CircleShape)
-                            .border(1.5.dp, MaterialTheme.colors.secondary)
+                            .border(1.5.dp, MaterialTheme.colors.secondary, RoundedCornerShape(10.dp))
                     )
                 }
                 else {
@@ -96,7 +97,9 @@ class MainActivity : ComponentActivity() {
             Column {
                 Text(
                     text = databaseEmployee.name,
-                    color = MaterialTheme.colors.secondaryVariant, style = MaterialTheme.typography.h1)
+                    color = MaterialTheme.colors.secondaryVariant,
+                    style = MaterialTheme.typography.h4)
+//                    modifier = Modifier.size(200.dp))
             }
         }
     }
