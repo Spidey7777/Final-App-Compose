@@ -16,7 +16,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -53,7 +52,7 @@ class MainActivity : ComponentActivity() {
                         painter = painterResource(id = R.drawable.man),
                         contentDescription = "lol",
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(120.dp)
                             .clip(CircleShape)
                             .border(1.5.dp, MaterialTheme.colors.secondary)
                     )
@@ -63,7 +62,7 @@ class MainActivity : ComponentActivity() {
                         painter = painterResource(id = R.drawable.man),
                         contentDescription = "lol",
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(120.dp)
                             .clip(CircleShape)
                             .border(1.5.dp, MaterialTheme.colors.secondary)
                     )
@@ -75,7 +74,7 @@ class MainActivity : ComponentActivity() {
                         painter = painterResource(id = R.drawable.woman),
                         contentDescription = "lol",
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(120.dp)
                             .clip(CircleShape)
                             .border(1.5.dp, MaterialTheme.colors.error)
                     )
@@ -85,7 +84,7 @@ class MainActivity : ComponentActivity() {
                         painter = painterResource(id = R.drawable.woman),
                         contentDescription = "lol",
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(120.dp)
                             .clip(CircleShape)
                             .border(1.5.dp, MaterialTheme.colors.error)
                     )
@@ -116,7 +115,8 @@ class MainActivity : ComponentActivity() {
     fun PreviewEmployees() {
         RandomUserTheme {
             viewModel = ViewModelProvider(this, EmployeeViewModel.Factory(application!!)).get(EmployeeViewModel::class.java)
-            viewModel.empList.value?.let { Employees(databaseEmployees = it) }
+            val items by viewModel.empList.observeAsState()
+            items?.let { Employees(databaseEmployees = it) }
         }
     }
 }
