@@ -1,5 +1,6 @@
 package com.example.randomuser
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -46,67 +47,41 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun EmployeeCard(databaseEmployee: DatabaseEmployee) {
+        val gender = databaseEmployee.gender
+        var drawable = 0
+        if (gender == "male") {
+            drawable = R.drawable.man
+        }
+        else {
+            drawable = R.drawable.woman
+        }
         Row(modifier = Modifier.padding(all = 8.dp)) {
-            if(databaseEmployee.gender == "male") {
-                if (databaseEmployee.status == "active") {
-                    Image(
-                        painter = painterResource(id = R.drawable.man),
-                        contentDescription = "lol",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .border(1.5.dp, MaterialTheme.colors.secondary, RoundedCornerShape(10.dp))
-                    )
-                }
-                else {
-                    Image(
-                        painter = painterResource(id = R.drawable.man),
-                        contentDescription = "lol",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .border(1.5.dp, MaterialTheme.colors.secondary)
-                    )
-                }
-            }
-            else {
-                if (databaseEmployee.status == "active") {
-                    Image(
-                        painter = painterResource(id = R.drawable.woman),
-                        contentDescription = "lol",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .border(1.5.dp, MaterialTheme.colors.error)
-                    )
-                }
-                else {
-                    Image(
-                        painter = painterResource(id = R.drawable.woman),
-                        contentDescription = "lol",
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .border(1.5.dp, MaterialTheme.colors.error)
-                    )
-                }
-            }
+            Image(
+                painter = painterResource(id = drawable),
+                contentDescription = "man",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape))
 
-            Spacer(modifier = Modifier.width(8.dp))
+
+            Spacer(modifier = Modifier.width(15.dp))
             
             Column {
                 Text(
                     text = databaseEmployee.name,
-                    color = MaterialTheme.colors.secondaryVariant,
-                    style = MaterialTheme.typography.h4)
+                    color = MaterialTheme.colors.primaryVariant,
+                    style = MaterialTheme.typography.h5)
 //                    modifier = Modifier.size(200.dp))
+//                    modifier = Modifier.padding(10.dp))
             }
         }
     }
 
     @Composable
     fun Employees(databaseEmployees: List<DatabaseEmployee>) {
-        LazyColumn {
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 30.dp)
+        ) {
             items(databaseEmployees) { empl ->
                 EmployeeCard(databaseEmployee = empl)
             }
