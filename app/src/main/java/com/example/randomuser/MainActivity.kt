@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,8 +19,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.randomuser.database.DatabaseEmployee
 import com.example.randomuser.network.EmployeeDetails
 import com.example.randomuser.ui.theme.RandomUserTheme
+import org.intellij.lang.annotations.JdkConstants
 
 class MainActivity : ComponentActivity() {
 
@@ -38,10 +42,8 @@ class MainActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this, EmployeeViewModel.Factory(application)).get(EmployeeViewModel::class.java)
         setContent {
             RandomUserTheme {
-//                viewModel.empList.value?.let { Employees(databaseEmployees = it) }
                 val items by viewModel.empList.observeAsState()
                 items?.let { Employees(databaseEmployees = it) }
-
             }
         }
     }
@@ -69,24 +71,31 @@ class MainActivity : ComponentActivity() {
         }
 
 
-        Row(modifier = Modifier.padding(all = 8.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(top = 10.dp, start = 5.dp, end = 0.dp)
+                .fillMaxWidth()
+//            horizontalArrangement = Arrangement.Center,
+//            verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
                 painter = painterResource(id = set_gender),
                 contentDescription = "gender",
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(70.dp)
                     .clip(CircleShape))
 
 
             Spacer(modifier = Modifier.width(1.dp))
             
-            Column(modifier = Modifier.padding(top = 25.dp, start = 7.dp, end = 7.dp)) {
+            Column(modifier = Modifier.padding(top = 11.dp, start = 7.dp, end = 0.dp)) {
                 Text(
                     text = databaseEmployee.name,
                     color = MaterialTheme.colors.primaryVariant,
                     style = MaterialTheme.typography.h5,
                     fontWeight = FontWeight.Bold,
-                    maxLines = 1
+                    maxLines = 1,
+                    modifier = Modifier.width(100.dp)
                 )
 //                    modifier = Modifier.size(200.dp))
 //                    modifier = Modifier.padding(10.dp))
@@ -94,7 +103,8 @@ class MainActivity : ComponentActivity() {
                     text = databaseEmployee.email,
                     color = MaterialTheme.colors.secondaryVariant,
                     style = MaterialTheme.typography.body2,
-                    maxLines = 1
+                    maxLines = 1,
+                    modifier = Modifier.width(250.dp)
                 )
             }
 
@@ -104,7 +114,7 @@ class MainActivity : ComponentActivity() {
                 painter = painterResource(id = set_status),
                 contentDescription = "status",
                 modifier = Modifier
-                    .size((50.dp))
+                    .size(50.dp)
             )
         }
     }
