@@ -21,6 +21,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -47,33 +48,64 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun EmployeeCard(databaseEmployee: DatabaseEmployee) {
+
         val gender = databaseEmployee.gender
-        var drawable = 0
+        var set_gender = 0
         if (gender == "male") {
-            drawable = R.drawable.man
+            set_gender = R.drawable.man
         }
         else {
-            drawable = R.drawable.woman
+            set_gender = R.drawable.woman
         }
+
+
+        val status = databaseEmployee.status
+        var set_status = 0
+        if (status == "active") {
+            set_status = R.drawable.gtu
+        }
+        else {
+            set_status = R.drawable.rtd
+        }
+
+
         Row(modifier = Modifier.padding(all = 8.dp)) {
             Image(
-                painter = painterResource(id = drawable),
-                contentDescription = "man",
+                painter = painterResource(id = set_gender),
+                contentDescription = "gender",
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape))
 
 
-            Spacer(modifier = Modifier.width(15.dp))
+            Spacer(modifier = Modifier.width(1.dp))
             
-            Column {
+            Column(modifier = Modifier.padding(top = 25.dp, start = 7.dp, end = 7.dp)) {
                 Text(
                     text = databaseEmployee.name,
                     color = MaterialTheme.colors.primaryVariant,
-                    style = MaterialTheme.typography.h5)
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
+                )
 //                    modifier = Modifier.size(200.dp))
 //                    modifier = Modifier.padding(10.dp))
+                Text(
+                    text = databaseEmployee.email,
+                    color = MaterialTheme.colors.secondaryVariant,
+                    style = MaterialTheme.typography.body2,
+                    maxLines = 1
+                )
             }
+
+            Spacer(modifier = Modifier.width(1.dp))
+
+            Image(
+                painter = painterResource(id = set_status),
+                contentDescription = "status",
+                modifier = Modifier
+                    .size((50.dp))
+            )
         }
     }
 
