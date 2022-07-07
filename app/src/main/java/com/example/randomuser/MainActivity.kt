@@ -92,8 +92,6 @@ class MainActivity : ComponentActivity() {
                     maxLines = 1,
                     modifier = Modifier.width(250.dp)
                 )
-//                    modifier = Modifier.size(200.dp))
-//                    modifier = Modifier.padding(10.dp))
                 Text(
                     text = databaseEmployee.email,
                     color = MaterialTheme.colors.secondaryVariant,
