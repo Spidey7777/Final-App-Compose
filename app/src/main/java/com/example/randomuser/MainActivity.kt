@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -71,31 +72,25 @@ class MainActivity : ComponentActivity() {
         }
 
 
-        Row(
-            modifier = Modifier
-                .padding(bottom = 60.dp, start = 5.dp, end = 5.dp)
-                .fillMaxWidth()
-//            horizontalArrangement = Arrangement.Center,
-//            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row {
             Image(
                 painter = painterResource(id = set_gender),
                 contentDescription = "gender",
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(50.dp)
                     .clip(CircleShape))
 
 
-            Spacer(modifier = Modifier.width(1.dp))
+            Spacer(modifier = Modifier.width(3.dp))
             
-            Column(modifier = Modifier.padding(top = 11.dp, start = 7.dp, end = 0.dp)) {
+            Column(modifier = Modifier.padding(start = 7.dp, end = 0.dp)) {
                 Text(
                     text = databaseEmployee.name,
                     color = MaterialTheme.colors.primaryVariant,
                     style = MaterialTheme.typography.h5,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
-                    modifier = Modifier.width(100.dp)
+                    modifier = Modifier.width(250.dp)
                 )
 //                    modifier = Modifier.size(200.dp))
 //                    modifier = Modifier.padding(10.dp))
@@ -122,10 +117,12 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Employees(databaseEmployees: List<DatabaseEmployee>) {
         LazyColumn(
-            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 30.dp)
+            contentPadding = PaddingValues(horizontal = 15.dp, vertical = 30.dp),
+            verticalArrangement = Arrangement.spacedBy(25.dp)
         ) {
             items(databaseEmployees) { empl ->
                 EmployeeCard(databaseEmployee = empl)
+                Divider(color = Color.LightGray)
             }
         }
     }
